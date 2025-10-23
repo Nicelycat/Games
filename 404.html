@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | The Sunken Fate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-orange: #ff5e00;
+            --neon-red: #ff003c;
+            --white: #ffffff;
+            --dark-bg: #0a0a12;
+            --card-bg: #151522;
+            --accent: #ff3366;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 94, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 60, 0.05) 0%, transparent 20%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(21, 21, 34, 0.7);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        .error-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 94, 0, 0.5);
+            margin: 20px 0;
+            line-height: 1;
+        }
+        
+        .error-message {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .error-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .redirect-info {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+            background: rgba(255, 94, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-orange);
+        }
+        
+        .countdown {
+            font-weight: bold;
+            color: var(--neon-orange);
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .home-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-red));
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 94, 0, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 94, 0, 0.5);
+        }
+        
+        .games-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 94, 0, 0.3);
+        }
+        
+        .games-button:hover {
+            background: rgba(255, 94, 0, 0.2);
+            border-color: var(--neon-orange);
+            transform: translateY(-3px);
+        }
+        
+        .apps-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 94, 0, 0.3);
+        }
+        
+        .apps-button:hover {
+            background: rgba(255, 94, 0, 0.2);
+            border-color: var(--neon-orange);
+            transform: translateY(-3px);
+        }
+        
+        .animation-container {
+            margin: 30px 0;
+            position: relative;
+            height: 120px;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.7;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .icon-1 {
+            top: 10px;
+            left: 20%;
+            color: var(--neon-orange);
+            animation-delay: 0s;
+        }
+        
+        .icon-2 {
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--neon-red);
+            animation-delay: 0.5s;
+        }
+        
+        .icon-3 {
+            top: 10px;
+            right: 20%;
+            color: var(--neon-orange);
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-message {
+                font-size: 1.5rem;
+            }
+            
+            .error-description {
+                font-size: 1.1rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .home-button, .games-button, .apps-button {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-message {
+                font-size: 1.3rem;
+            }
+            
+            .floating-icon {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>The Sunken Fate</h1>
+            <p>Unblocked Games for Endless Entertainment</p>
+        </div>
+        
+        <div class="animation-container">
+            <div class="floating-icon icon-1">⚠️</div>
+            <div class="floating-icon icon-2">🔍</div>
+            <div class="floating-icon icon-3">🚫</div>
+        </div>
+        
+        <div class="error-code">404</div>
+        
+        <div class="error-message">Page Not Found</div>
+        
+        <div class="error-description">
+            The page you're looking for seems to have been lost in the depths. 
+            It might have been moved, deleted, or perhaps it never existed.
+        </div>
+        
+        <div class="redirect-info">
+            Don't worry! You'll be automatically redirected to the homepage in <span class="countdown" id="countdown">5</span> seconds.
+        </div>
+        
+        <div class="button-group">
+            <a href="index.html" class="home-button">Go Home</a>
+            <a href="games.html" class="games-button">Browse Games</a>
+            <a href="apps.html" class="apps-button">Explore Apps</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 The Sunken Fate. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Countdown and redirect functionality
+        let countdownElement = document.getElementById('countdown');
+        let countdown = 5;
+        
+        const countdownInterval = setInterval(function() {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+        
+        // Allow users to cancel the redirect by clicking anywhere
+        document.addEventListener('click', function() {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = 'Redirect cancelled';
+            countdownElement.style.color = '#6bffd9';
+        });
+        
+        // Also cancel redirect if user starts typing
+        document.addEventListener('keydown', function() {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = 'Redirect cancelled';
+            countdownElement.style.color = '#6bffd9';
+        });
+    </script>
+</body>
+</html>
