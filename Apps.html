@@ -1,1 +1,619 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps | The Sunken Fate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@400;600&display=swap");
+
+        :root {
+            --neon-orange: #ff5e00;
+            --neon-red: #ff003c;
+            --white: #ffffff;
+            --dark-bg: #0a0a12;
+            --card-bg: #151522;
+            --accent: #ff3366;
+            --shadow-md: 0 8px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.3);
+            --transition-normal: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 94, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 60, 0.05) 0%, transparent 20%);
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to bottom, rgba(10, 10, 18, 0.9), rgba(10, 10, 18, 0.7));
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--neon-orange);
+        }
+        
+        nav a.active {
+            color: var(--neon-orange);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-orange);
+            box-shadow: 0 0 8px var(--neon-orange);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 94, 0, 0.3);
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-orange), var(--neon-red));
+            border-radius: 2px;
+        }
+
+        /* Apps Grid Styles */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            margin-top: 2rem;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, 
+                rgba(21, 21, 34, 0.8), 
+                rgba(26, 26, 46, 0.8));
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all var(--transition-bounce);
+            border: 1px solid rgba(255, 94, 0, 0.1);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 94, 0, 0.2);
+            border-color: rgba(255, 94, 0, 0.3);
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all var(--transition-normal);
+            opacity: 0;
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid transparent;
+            background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+                        linear-gradient(135deg, var(--neon-orange), var(--neon-red)) border-box;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-bounce);
+            position: relative;
+            z-index: 2;
+        }
+
+        .app-card:hover .app-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(255, 94, 0, 0.4);
+        }
+
+        .app-name {
+            font-size: 1.1rem;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: block;
+            background: linear-gradient(135deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 94, 0, 0.3);
+            text-align: center;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .app-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-orange), var(--neon-red));
+            border-radius: 2px;
+            transition: all var(--transition-normal);
+        }
+
+        .app-card:hover .app-name::after {
+            width: 70px;
+        }
+
+        .add-app-btn {
+            background: rgba(21, 21, 34, 0.3);
+            border: 2px dashed rgba(255, 94, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-app-btn:hover {
+            background: rgba(21, 21, 34, 0.5);
+            border-color: var(--neon-orange);
+        }
+
+        .add-app-icon {
+            font-size: 2.5rem;
+            color: var(--neon-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, 
+                rgba(21, 21, 34, 0.8), 
+                rgba(26, 26, 46, 0.8));
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-normal);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            padding-left: 3rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--neon-orange);
+            box-shadow: 0 5px 20px rgba(255, 94, 0, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-orange);
+            font-size: 1.2rem;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, 
+                rgba(21, 21, 34, 0.7), 
+                rgba(26, 26, 46, 0.7));
+            color: var(--white);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: linear-gradient(135deg, 
+                rgba(255, 94, 0, 0.2), 
+                rgba(255, 0, 60, 0.2));
+            border-color: var(--neon-orange);
+            transform: translateY(-3px);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, 
+                var(--neon-orange), 
+                var(--neon-red));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 94, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #080810;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--neon-orange);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--neon-orange);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page {
+                padding: 1.5rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+                padding: 10px;
+            }
+            
+            .app-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .app-name {
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>The Sunken Fate</h1>
+                <p>Unblocked Games for Endless Entertainment</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="apps.html" class="active">Apps</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page">
+        <h1>Apps</h1>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-bar" placeholder="Search apps...">
+        </div>
+        
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="social">Social</button>
+            <button class="category-btn" data-category="games">Games</button>
+            <button class="category-btn" data-category="tools">Tools</button>
+            <button class="category-btn" data-category="education">Education</button>
+        </div>
+        
+        <div class="apps-grid">
+            <!-- TikTok -->
+            <a href="/static/embed.html#https://tiktok.com" class="app-card" data-category="social">
+                <img src="https://sf-tb-sg.ibytedtos.com/obj/eden-sg/uhtyvueh7nulogpoguhm/tiktok-icon2.png" alt="TikTok" class="app-icon">
+                <span class="app-name">TikTok</span>
+            </a>
+            
+            <!-- Twitch -->
+            <a href="/static/embed.html#https://twitch.tv" class="app-card" data-category="social">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968819.png" alt="Twitch" class="app-icon">
+                <span class="app-name">Twitch</span>
+            </a>
+            
+            <!-- Google -->
+            <a href="/static/embed.html#https://google.com" class="app-card" data-category="tools">
+                <img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google" class="app-icon">
+                <span class="app-name">Google</span>
+            </a>
+            
+            <!-- now.gg -->
+            <a href="/static/embed.html#https://now.gg" class="app-card" data-category="games">
+                <img src="https://play-lh.googleusercontent.com/4HXQ3J_VX4QEMVQ6JvBVQr1X7bz0YJ-2qY9TOfIGK9_1HxE9Jwwh0L9kQr7JmBqYJY=w240-h480-rw" alt="now.gg" class="app-icon">
+                <span class="app-name">now.gg</span>
+            </a>
+            
+            <!-- VS Code -->
+            <a href="/static/embed.html#https://vscode.dev" class="app-card" data-category="tools">
+                <img src="https://code.visualstudio.com/assets/images/code-stable.png" alt="VS Code" class="app-icon">
+                <span class="app-name">VS Code</span>
+            </a>
+            
+            <!-- HTML Unleashed -->
+            <a href="https://html-unleashed.pages.dev" class="app-card" data-category="education">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML Unleashed" class="app-icon">
+                <span class="app-name">HTML Unleashed</span>
+            </a>
+            
+            <!-- YouTube -->
+            <a href="/static/embed.html#https://youtube.com" class="app-card" data-category="social">
+                <img src="https://www.youtube.com/s/desktop/d743f786/img/favicon_144x144.png" alt="YouTube" class="app-icon">
+                <span class="app-name">YouTube</span>
+            </a>
+            
+            <!-- Discord -->
+            <a href="/static/embed.html#https://discord.com" class="app-card" data-category="social">
+                <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord" class="app-icon">
+                <span class="app-name">Discord</span>
+            </a>
+            
+            <!-- Add App Button -->
+            <div class="app-card add-app-btn" id="add-app-btn">
+                <i class="material-icons add-app-icon">add</i>
+                <span class="app-name">Add App</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Sunken Fate</h3>
+                    <p>Your ultimate destination for unblocked games and apps. Play the best games without restrictions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="games.html">Games</a>
+                    <a href="apps.html">Apps</a>
+                </div>
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 The Sunken Fate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBar = document.querySelector('.search-bar');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const appCards = document.querySelectorAll('.app-card:not(#add-app-btn)');
+            const addAppBtn = document.getElementById('add-app-btn');
+            
+            // Filter apps by category
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    filterApps(category);
+                });
+            });
+            
+            // Search functionality
+            searchBar.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filterApps(document.querySelector('.category-btn.active').dataset.category, searchTerm);
+            });
+            
+            // Add app button functionality
+            addAppBtn.addEventListener('click', function() {
+                const url = prompt('Enter the URL of the app you want to add:');
+                if (url) {
+                    const name = prompt('Enter the name of the app:') || 'New App';
+                    const category = prompt('Enter the category (social, games, tools, education):') || 'tools';
+                    
+                    // In a real implementation, you would save this to localStorage
+                    alert(`App "${name}" will be added to your collection (this is just a demo)`);
+                }
+            });
+            
+            function filterApps(category, searchTerm = '') {
+                appCards.forEach(card => {
+                    const matchesCategory = category === 'all' || card.dataset.category === category;
+                    const matchesSearch = card.querySelector('.app-name').textContent.toLowerCase().includes(searchTerm);
+                    
+                    if (matchesCategory && matchesSearch) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add hover effect for app cards
+            appCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.05)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
