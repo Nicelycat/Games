@@ -421,7 +421,7 @@
     <!-- Games Controls -->
     <div class="container">
         <div class="games-controls">
-            <div class="games-count">Showing 1-20 of 127 games</div>
+            <div class="games-count">Showing 1-20 of 80 games</div>
             <div class="sort-options">
                 <select>
                     <option>Sort by: Popular</option>
@@ -444,7 +444,6 @@
             <div class="page-button">2</div>
             <div class="page-button">3</div>
             <div class="page-button">4</div>
-            <div class="page-button">5</div>
             <div class="page-button">Next</div>
         </div>
     </div>
@@ -476,38 +475,101 @@
     </footer>
 
     <script>
-        // Sample game data - in a real implementation, this would come from a database
-        const gameTitles = [
-            "Neon Racer", "Cyber Jump", "Pixel Warriors", "Space Invaders X", "Zombie Apocalypse",
-            "Desert Drift", "Mystic Quest", "Galaxy Defender", "Ocean Explorer", "Dungeon Crawler",
-            "Rocket League", "Battle Royale", "Puzzle Master", "Speed Runner", "Tower Defense",
-            "Adventure Island", "Super Soccer", "Basketball Pro", "Racing Extreme", "Fruit Slasher",
-            "Math Challenge", "Word Search", "Memory Game", "Chess Master", "Solitaire Pro",
-            "Bubble Shooter", "Candy Crush", "Tetris Ultimate", "Pac-Man Classic", "Snake Evolution",
-            "Minecraft 2D", "Fortnite Mini", "Among Us Lite", "Roblox Adventures", "Fall Guys Fun",
-            "Car Simulator", "Flight Pilot", "Train Conductor", "Ship Captain", "Truck Driver",
-            "Animal Rescue", "Pet Care", "Farm Frenzy", "Zoo Keeper", "Aquarium Manager",
-            "Cooking Mama", "Restaurant Tycoon", "Hotel Manager", "City Builder", "Business Sim",
-            "Hidden Objects", "Escape Room", "Murder Mystery", "Detective Story", "Spy Adventure",
-            "Horror Mansion", "Ghost Hunter", "Vampire Slayer", "Werewolf Attack", "Zombie Survival",
-            "Superhero Battle", "Villain Defeat", "Alien Invasion", "Robot Uprising", "Monster Fight",
-            "Dragon Tamer", "Wizard Duel", "Magic Academy", "Fairy Tale", "Mythical Creatures",
-            "Wild West", "Pirate Adventure", "Knight Quest", "Viking Raid", "Samurai Duel",
-            "Space Explorer", "Mars Colony", "Moon Base", "Alien Planet", "Black Hole",
-            "Time Travel", "Future City", "Steampunk World", "Cyberpunk Adventure", "Post-Apocalyptic",
-            "Underwater World", "Deep Sea Dive", "Coral Reef", "Shipwreck Discovery", "Treasure Hunt",
-            "Jungle Expedition", "Mountain Climb", "Desert Trek", "Arctic Exploration", "Volcano Escape",
-            "Sports Challenge", "Olympic Games", "Extreme Sports", "Winter Games", "Summer Games",
-            "Music Rhythm", "Dance Party", "Karaoke Fun", "Instrument Master", "Beat Maker",
-            "Art Studio", "Drawing Game", "Painting Fun", "Color Match", "Design Challenge",
-            "Science Lab", "Physics Puzzle", "Chemistry Game", "Biology Explorer", "Astronomy Adventure"
-        ];
+        // Game data in JSON format
+        const gamesData = {
+            "games": [
+                { "title": "Slope", "path": "g/slope" },
+                { "title": "Retro Bowl", "path": "g/retro-bowl" },
+                { "title": "DeadShot.io", "path": "g/deadshotio" },
+                { "title": "Gunspin", "path": "g/gunspin" },
+                { "title": "1v1.lol", "path": "g/1v1lol" },
+                { "title": "Block Blast", "path": "g/blockblast" },
+                { "title": "Idle Breakout", "path": "g/idle-breakout" },
+                { "title": "Learn To Fly", "path": "g/learntofly" },
+                { "title": "Baldi's Basics", "path": "g/baldisbasics" },
+                { "title": "Gun Mayhem", "path": "g/gunmayhem" },
+                { "title": "Gun Mayhem 2", "path": "g/gunmayhem2" },
+                { "title": "Wall Smash", "path": "g/wallsmash" },
+                { "title": "FNAF 1", "path": "g/fnaf" },
+                { "title": "FNAF 2", "path": "g/fnaf-2" },
+                { "title": "Drift Boss", "path": "g/driftboss" },
+                { "title": "Jack Smith", "path": "g/jacksmith" },
+                { "title": "Image Tracer", "path": "/imagetracer" },
+                { "title": "Infinite Craft", "path": "g/infinitecraft" },
+                { "title": "Crazy Tunnel 3D", "path": "g/crazytunnel3d" },
+                { "title": "Lazy Jump 3D", "path": "g/lazyjump3d" },
+                { "title": "House Of Hazards", "path": "g/houseofhazards" },
+                { "title": "Hole.io", "path": "g/holeio" },
+                { "title": "Cut The Rope", "path": "g/cut-the-rope" },
+                { "title": "Tank Trouble", "path": "g/tanktrouble" },
+                { "title": "Drift Hunters", "path": "g/drifthunters" },
+                { "title": "Volley Random", "path": "g/volleyrandom" },
+                { "title": "Draw The Hill", "path": "g/draw-the-hill" },
+                { "title": "Basketball Bros", "path": "g/basketballio" },
+                { "title": "Just Fall", "path": "g/justfall" },
+                { "title": "Snow Rider 3D", "path": "g/snowrider3d" },
+                { "title": "Tetris", "path": "g/tetris" },
+                { "title": "Checkout Frenzy", "path": "g/checkoutfrenzy" },
+                { "title": "Fireboy & Watergirl", "path": "g/fireboywatergirlforsettemple" },
+                { "title": "Tiny Fishing", "path": "g/tinyfishing" },
+                { "title": "Time Shooter", "path": "g/timeshooter" },
+                { "title": "Getaway Shootout", "path": "g/getaway-shootout" },
+                { "title": "Soccer Random", "path": "g/soccer-random" },
+                { "title": "Crossy Road", "path": "g/crossyroad" },
+                { "title": "Rooftop Sniper", "path": "g/rooftopsnipers" },
+                { "title": "Boxing Random", "path": "g/boxingrandom" },
+                { "title": "Adventure Capitalist", "path": "g/adventurecapitalist" },
+                { "title": "Hide & Smash", "path": "g/hideandsmash" },
+                { "title": "MonkeyMart", "path": "g/monkey-mart" },
+                { "title": "Retro Bowl College", "path": "g/rb-college" },
+                { "title": "Windows Desktop", "path": "server" },
+                { "title": "Minecraft", "path": "g/mc" },
+                { "title": "Bloons TD5", "path": "g/btd5" },
+                { "title": "Mr Mine", "path": "g/mrmine" },
+                { "title": "Run 2", "path": "g/run2" },
+                { "title": "Run 3", "path": "g/run3" },
+                { "title": "Spend Elon's Money", "path": "g/elonmusk" },
+                { "title": "Plants V Zombies", "path": "g/pvz" },
+                { "title": "Duck Life", "path": "g/ducklife" },
+                { "title": "Mine Sweeper", "path": "g/minesweeper" },
+                { "title": "Pixel Gun", "path": "g/pixelgun" },
+                { "title": "Google Snake", "path": "g/googlesnake" },
+                { "title": "N Gon", "path": "g/ngon" },
+                { "title": "OVO", "path": "g/ovo" },
+                { "title": "Basketball Stars", "path": "g/basketballstars" },
+                { "title": "Stacktris", "path": "g/stacktris" },
+                { "title": "Black Jack", "path": "g/blackjack" },
+                { "title": "DBZ Devolution", "path": "g/dbz" },
+                { "title": "Drive Mad", "path": "g/drivemad" },
+                { "title": "Papa's Games", "path": "g/papas-game" },
+                { "title": "Stickman Games", "path": "g/henry-stickman" },
+                { "title": "Vex Games", "path": "g/vex" },
+                { "title": "2048", "path": "g/2048" },
+                { "title": "Paper.io 2", "path": "g/paperio2" },
+                { "title": "Bitlife", "path": "g/bitlife" },
+                { "title": "1", "path": "g/1" },
+                { "title": "Subway Surfers", "path": "g/subway-surfers" },
+                { "title": "Basketball Random", "path": "g/basketball-random" },
+                { "title": "MotoX3M", "path": "g/motox3m" },
+                { "title": "Cookie Clicker", "path": "g/cookieclicker" },
+                { "title": "Temple Run 2", "path": "g/temple-run-2" },
+                { "title": "Stickman Golf", "path": "g/stickman-golf" },
+                { "title": "CSGO Case Opener", "path": "g/case-clicker" },
+                { "title": "Pandemic 2", "path": "g/pandemic2" },
+                { "title": "Riddle School Games", "path": "g/riddleschool" },
+                { "title": "Cupcake 2048", "path": "g/cupcake2048" },
+                { "title": "Jetpack Joyride", "path": "g/jetpack-joyride" },
+                { "title": "Geometry Dash", "path": "g/geodash" },
+                { "title": "Duck Life 1", "path": "g/ducklife1" },
+                { "title": "Sand Boxels", "path": "g/sandboxels" }
+            ]
+        };
 
         // Generate game cards
         const gamesGrid = document.getElementById('gamesGrid');
         
-        // Create 100+ game cards
-        for (let i = 0; i < 127; i++) {
+        // Create game cards from JSON data
+        gamesData.games.forEach(game => {
             const gameCard = document.createElement('div');
             gameCard.className = 'game-card';
             
@@ -524,23 +586,23 @@
             ];
             
             const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
-            const gameName = gameTitles[i % gameTitles.length];
-            // Create a URL-friendly game name (lowercase, no spaces)
-            const gameUrl = gameName.toLowerCase().replace(/\s+/g, '-');
+            
+            // Generate the game link - handle paths that start with "/"
+            const gamePath = game.path.startsWith('/') ? game.path.substring(1) : game.path;
             
             gameCard.innerHTML = `
                 <div class="game-image">
-                    <div class="placeholder">${gameName}</div>
+                    <div class="placeholder">${game.title}</div>
                 </div>
                 <div class="game-info">
-                    <h3 class="game-title">${gameName}</h3>
+                    <h3 class="game-title">${game.title}</h3>
                     <p class="game-description">${randomDescription}</p>
-                    <a href="games/${gameUrl}/${gameUrl}.html" class="play-button">Play Now</a>
+                    <a href="${gamePath}" class="play-button">Play Now</a>
                 </div>
             `;
             
             gamesGrid.appendChild(gameCard);
-        }
+        });
 
         // Add search functionality
         const searchInput = document.querySelector('.search-bar input');
