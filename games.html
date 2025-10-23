@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games | The Sunken Fate</title>
+    <title>Games & Apps | The Sunken Fate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +15,10 @@
             --dark-bg: #0a0a12;
             --card-bg: #151522;
             --accent: #ff3366;
+            --shadow-md: 0 8px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.3);
+            --transition-normal: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
         * {
@@ -27,6 +33,9 @@
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 94, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 60, 0.05) 0%, transparent 20%);
         }
         
         .container {
@@ -106,6 +115,588 @@
             height: 2px;
             background: var(--neon-orange);
             box-shadow: 0 0 8px var(--neon-orange);
+        }
+        
+        /* Games & Apps Page Styles */
+        .page-hero {
+            padding: 40px 0 30px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.1) 0%, rgba(10, 10, 18, 0) 70%);
+        }
+        
+        .page-hero h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-orange), var(--white));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .page-hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .search-bar {
+            max-width: 500px;
+            margin: 30px auto;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+        }
+        
+        .content-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .content-count {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-options select {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .sort-options select:focus {
+            border-color: var(--neon-orange);
+        }
+        
+        /* Content Type Tabs */
+        .content-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        
+        .content-tab {
+            padding: 10px 25px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, 
+                rgba(21, 21, 34, 0.7), 
+                rgba(26, 26, 46, 0.7));
+            color: var(--white);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .content-tab:hover, .content-tab.active {
+            background: linear-gradient(135deg, 
+                rgba(255, 94, 0, 0.2), 
+                rgba(255, 0, 60, 0.2));
+            border-color: var(--neon-orange);
+            transform: translateY(-3px);
+        }
+        
+        .content-tab.active {
+            background: linear-gradient(135deg, 
+                var(--neon-orange), 
+                var(--neon-red));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 94, 0, 0.3);
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px 0 40px;
+        }
+        
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 94, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 94, 0, 0.2);
+            border-color: rgba(255, 94, 0, 0.3);
+        }
+        
+        .content-image {
+            height: 160px;
+            background: linear-gradient(45deg, #1a1a2a, #2a2a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 94, 0, 0.1), rgba(255, 0, 60, 0.1));
+        }
+        
+        .content-image .placeholder {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .content-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        
+        .content-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .content-type {
+            background: rgba(255, 94, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: var(--neon-orange);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .play-button:hover {
+            background: var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 94, 0, 0.5);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+        
+        .page-button {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .page-button:hover {
+            background: rgba(255, 94, 0, 0.2);
+            color: var(--white);
+        }
+        
+        .page-button.active {
+            background: var(--neon-orange);
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #080810;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--neon-orange);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--neon-orange);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .page-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .content-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .content-tabs {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>The Sunken Fate</h1>
+                <p>Unblocked Games & Apps for Endless Entertainment</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="games.html" class="active">Games & Apps</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Games & Apps Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h2>Games & Apps</h2>
+            <p>Browse our complete collection of unblocked games and apps. Find your favorites and discover new ones!</p>
+            <div class="search-bar">
+                <input type="text" class="search-bar-input" placeholder="Search games and apps...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Controls -->
+    <div class="container">
+        <div class="content-tabs">
+            <button class="content-tab active" data-type="all">All</button>
+            <button class="content-tab" data-type="games">Games</button>
+            <button class="content-tab" data-type="apps">Apps</button>
+        </div>
+        
+        <div class="content-controls">
+            <div class="content-count">Showing <span id="contentCount">1-20</span> of <span id="totalCount">127</span> items</div>
+            <div class="sort-options">
+                <select id="sortSelect">
+                    <option>Sort by: Popular</option>
+                    <option>Sort by: Newest</option>
+                    <option>Sort by: A-Z</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="container">
+        <div class="content-grid" id="contentGrid">
+            <!-- Content cards will be generated by JavaScript -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="page-button active">1</div>
+            <div class="page-button">2</div>
+            <div class="page-button">3</div>
+            <div class="page-button">4</div>
+            <div class="page-button">5</div>
+            <div class="page-button">Next</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Sunken Fate</h3>
+                    <p>Your ultimate destination for unblocked games and apps. Play the best content without restrictions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="games.html">Games & Apps</a>
+                </div>
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 The Sunken Fate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Combined content data
+        const contentData = {
+            "games": [
+                { "title": "Slope", "path": "g/slope", "type": "game", "description": "Navigate a ball down a treacherous slope in this fast-paced 3D game." },
+                { "title": "Retro Bowl", "path": "g/retro-bowl", "type": "game", "description": "Classic football action with retro graphics and addictive gameplay." },
+                { "title": "DeadShot.io", "path": "g/deadshotio", "type": "game", "description": "Test your aim in this competitive multiplayer shooter game." },
+                { "title": "1v1.lol", "path": "g/1v1lol", "type": "game", "description": "Build, edit and shoot in this 1v1 battle royale experience." },
+                { "title": "Block Blast", "path": "g/blockblast", "type": "game", "description": "Addictive block puzzle game with colorful graphics." },
+                { "title": "Idle Breakout", "path": "g/idle-breakout", "type": "game", "description": "Classic breakout with idle progression mechanics." },
+                { "title": "Learn To Fly", "path": "g/learntofly", "type": "game", "description": "Help a penguin learn to fly in this physics-based game." },
+                { "title": "Baldi's Basics", "path": "g/baldisbasics", "type": "game", "description": "Survive the school in this horror-themed educational game." },
+                { "title": "Gun Mayhem", "path": "g/gunmayhem", "type": "game", "description": "Chaotic 2D platform shooter with various weapons." },
+                { "title": "FNAF 1", "path": "g/fnaf", "type": "game", "description": "Survive the night at Freddy's in this horror classic." },
+                { "title": "Drift Boss", "path": "g/driftboss", "type": "game", "description": "Master the art of drifting in this challenging driving game." },
+                { "title": "Minecraft", "path": "g/mc", "type": "game", "description": "Build, explore and survive in this blocky sandbox world." },
+                { "title": "Run 3", "path": "g/run3", "type": "game", "description": "Navigate through space in this endless runner game." },
+                { "title": "Geometry Dash", "path": "g/geodash", "type": "game", "description": "Rhythm-based platformer with challenging levels." },
+                { "title": "Cookie Clicker", "path": "g/cookieclicker", "type": "game", "description": "The classic idle game about baking cookies." },
+                { "title": "Temple Run 2", "path": "g/temple-run-2", "type": "game", "description": "Endless runner through ancient temple ruins." },
+                { "title": "Subway Surfers", "path": "g/subway-surfers", "type": "game", "description": "Dodge trains and obstacles in this endless runner." },
+                { "title": "2048", "path": "g/2048", "type": "game", "description": "Combine tiles to reach the 2048 tile in this puzzle game." },
+                { "title": "Tetris", "path": "g/tetris", "type": "game", "description": "The classic block-stacking puzzle game." },
+                { "title": "Paper.io 2", "path": "g/paperio2", "type": "game", "description": "Claim territory and defeat opponents in this IO game." }
+            ],
+            "apps": [
+                { "title": "TikTok", "path": "/static/embed.html#https://tiktok.com", "type": "app", "description": "Short-form mobile videos platform for entertainment." },
+                { "title": "YouTube", "path": "/static/embed.html#https://youtube.com", "type": "app", "description": "Watch, share, and upload videos on the world's largest platform." },
+                { "title": "Discord", "path": "/static/embed.html#https://discord.com", "type": "app", "description": "Voice, video, and text communication platform." },
+                { "title": "Twitch", "path": "/static/embed.html#https://twitch.tv", "type": "app", "description": "Live streaming platform for gamers and creators." },
+                { "title": "Google", "path": "/static/embed.html#https://google.com", "type": "app", "description": "Search the world's information with the leading search engine." },
+                { "title": "VS Code", "path": "/static/embed.html#https://vscode.dev", "type": "app", "description": "Online code editor with powerful features." },
+                { "title": "now.gg", "path": "/static/embed.html#https://now.gg", "type": "app", "description": "Cloud gaming platform to play mobile games on any device." },
+                { "title": "HTML Unleashed", "path": "https://html-unleashed.pages.dev", "type": "app", "description": "Interactive platform for learning and experimenting with HTML." },
+                { "title": "Windows Desktop", "path": "server", "type": "app", "description": "Virtual desktop environment with various applications." },
+                { "title": "Image Tracer", "path": "/imagetracer", "type": "app", "description": "Convert images to vector graphics with this online tool." },
+                { "title": "Bitlife", "path": "g/bitlife", "type": "app", "description": "Life simulation game where you make life choices." },
+                { "title": "Spend Elon's Money", "path": "g/elonmusk", "type": "app", "description": "Simulation game where you spend Elon Musk's fortune." },
+                { "title": "Infinite Craft", "path": "g/infinitecraft", "type": "app", "description": "Endless crafting and combining game." },
+                { "title": "Checkout Frenzy", "path": "g/checkoutfrenzy", "type": "app", "description": "Manage a busy checkout counter in this simulation game." },
+                { "title": "MonkeyMart", "path": "g/monkey-mart", "type": "app", "description": "Run your own supermarket in this business simulation." }
+            ]
+        };
+
+        // Generate content cards
+        const contentGrid = document.getElementById('contentGrid');
+        const contentTabs = document.querySelectorAll('.content-tab');
+        const searchInput = document.querySelector('.search-bar-input');
+        const contentCount = document.getElementById('contentCount');
+        const totalCount = document.getElementById('totalCount');
+        
+        let currentType = 'all';
+        let currentSearch = '';
+        
+        // Initialize the page
+        function initializePage() {
+            renderContent();
+            setupEventListeners();
+        }
+        
+        // Render content based on current filters
+        function renderContent() {
+            contentGrid.innerHTML = '';
+            
+            let allContent = [];
+            
+            // Combine games and apps based on current filter
+            if (currentType === 'all') {
+                allContent = [...contentData.games, ...contentData.apps];
+            } else if (currentType === 'games') {
+                allContent = contentData.games;
+            } else if (currentType === 'apps') {
+                allContent = contentData.apps;
+            }
+            
+            // Apply search filter
+            if (currentSearch) {
+                allContent = allContent.filter(item => 
+                    item.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                    item.description.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            }
+            
+            // Update counts
+            totalCount.textContent = allContent.length;
+            contentCount.textContent = `1-${Math.min(20, allContent.length)}`;
+            
+            // Create content cards
+            allContent.forEach(item => {
+                const contentCard = document.createElement('div');
+                contentCard.className = 'content-card';
+                contentCard.dataset.type = item.type;
+                
+                contentCard.innerHTML = `
+                    <div class="content-image">
+                        <div class="placeholder">${item.title}</div>
+                    </div>
+                    <div class="content-info">
+                        <h3 class="content-title">${item.title}</h3>
+                        <p class="content-description">${item.description}</p>
+                        <div class="content-meta">
+                            <span class="content-type">${item.type.toUpperCase()}</span>
+                        </div>
+                        <a href="${item.path}" class="play-button">${item.type === 'game' ? 'Play Now' : 'Open App'}</a>
+                    </div>
+                `;
+                
+                contentGrid.appendChild(contentCard);
+            });
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Content type tabs
+            contentTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    contentTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentType = this.dataset.type;
+                    renderContent();
+                });
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                currentSearch = this.value;
+                renderContent();
+            });
+            
+            // Pagination
+            const pageButtons = document.querySelectorAll('.page-button');
+            pageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    pageButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would load the appropriate page
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+        
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>            box-shadow: 0 0 8px var(--neon-orange);
         }
         
         /* Games Page Styles */
