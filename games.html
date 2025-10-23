@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games | The Sunken Fate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-orange: #ff5e00;
+            --neon-red: #ff003c;
+            --white: #ffffff;
+            --dark-bg: #0a0a12;
+            --card-bg: #151522;
+            --accent: #ff3366;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to bottom, rgba(10, 10, 18, 0.9), rgba(10, 10, 18, 0.7));
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--neon-orange);
+        }
+        
+        nav a.active {
+            color: var(--neon-orange);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-orange);
+            box-shadow: 0 0 8px var(--neon-orange);
+        }
+        
+        /* Games Page Styles */
+        .games-hero {
+            padding: 40px 0 30px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.1) 0%, rgba(10, 10, 18, 0) 70%);
+        }
+        
+        .games-hero h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-orange), var(--white));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .games-hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .search-bar {
+            max-width: 500px;
+            margin: 30px auto;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+        }
+        
+        .games-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .games-count {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-options select {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .sort-options select:focus {
+            border-color: var(--neon-orange);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px 0 40px;
+        }
+        
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 94, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 94, 0, 0.2);
+            border-color: rgba(255, 94, 0, 0.3);
+        }
+        
+        .game-image {
+            height: 160px;
+            background: linear-gradient(45deg, #1a1a2a, #2a2a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 94, 0, 0.1), rgba(255, 0, 60, 0.1));
+        }
+        
+        .game-image .placeholder {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .game-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        
+        .game-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: var(--neon-orange);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .play-button:hover {
+            background: var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 94, 0, 0.5);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+        
+        .page-button {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .page-button:hover {
+            background: rgba(255, 94, 0, 0.2);
+            color: var(--white);
+        }
+        
+        .page-button.active {
+            background: var(--neon-orange);
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #080810;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--neon-orange);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--neon-orange);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .games-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .games-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>The Sunken Fate</h1>
+                <p>Unblocked Games for Endless Entertainment</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="games.html" class="active">Games</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Games Hero Section -->
+    <section class="games-hero">
+        <div class="container">
+            <h2>All Games</h2>
+            <p>Browse our complete collection of unblocked games. Find your favorites and discover new ones!</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search games...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Controls -->
+    <div class="container">
+        <div class="games-controls">
+            <div class="games-count">Showing 1-20 of 127 games</div>
+            <div class="sort-options">
+                <select>
+                    <option>Sort by: Popular</option>
+                    <option>Sort by: Newest</option>
+                    <option>Sort by: A-Z</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Grid -->
+    <div class="container">
+        <div class="games-grid" id="gamesGrid">
+            <!-- Game cards will be generated by JavaScript -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="page-button active">1</div>
+            <div class="page-button">2</div>
+            <div class="page-button">3</div>
+            <div class="page-button">4</div>
+            <div class="page-button">5</div>
+            <div class="page-button">Next</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Sunken Fate</h3>
+                    <p>Your ultimate destination for unblocked games. Play the best games without restrictions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="games.html">All Games</a>
+                </div>
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 The Sunken Fate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample game data - in a real implementation, this would come from a database
+        const gameTitles = [
+            "Neon Racer", "Cyber Jump", "Pixel Warriors", "Space Invaders X", "Zombie Apocalypse",
+            "Desert Drift", "Mystic Quest", "Galaxy Defender", "Ocean Explorer", "Dungeon Crawler",
+            "Rocket League", "Battle Royale", "Puzzle Master", "Speed Runner", "Tower Defense",
+            "Adventure Island", "Super Soccer", "Basketball Pro", "Racing Extreme", "Fruit Slasher",
+            "Math Challenge", "Word Search", "Memory Game", "Chess Master", "Solitaire Pro",
+            "Bubble Shooter", "Candy Crush", "Tetris Ultimate", "Pac-Man Classic", "Snake Evolution",
+            "Minecraft 2D", "Fortnite Mini", "Among Us Lite", "Roblox Adventures", "Fall Guys Fun",
+            "Car Simulator", "Flight Pilot", "Train Conductor", "Ship Captain", "Truck Driver",
+            "Animal Rescue", "Pet Care", "Farm Frenzy", "Zoo Keeper", "Aquarium Manager",
+            "Cooking Mama", "Restaurant Tycoon", "Hotel Manager", "City Builder", "Business Sim",
+            "Hidden Objects", "Escape Room", "Murder Mystery", "Detective Story", "Spy Adventure",
+            "Horror Mansion", "Ghost Hunter", "Vampire Slayer", "Werewolf Attack", "Zombie Survival",
+            "Superhero Battle", "Villain Defeat", "Alien Invasion", "Robot Uprising", "Monster Fight",
+            "Dragon Tamer", "Wizard Duel", "Magic Academy", "Fairy Tale", "Mythical Creatures",
+            "Wild West", "Pirate Adventure", "Knight Quest", "Viking Raid", "Samurai Duel",
+            "Space Explorer", "Mars Colony", "Moon Base", "Alien Planet", "Black Hole",
+            "Time Travel", "Future City", "Steampunk World", "Cyberpunk Adventure", "Post-Apocalyptic",
+            "Underwater World", "Deep Sea Dive", "Coral Reef", "Shipwreck Discovery", "Treasure Hunt",
+            "Jungle Expedition", "Mountain Climb", "Desert Trek", "Arctic Exploration", "Volcano Escape",
+            "Sports Challenge", "Olympic Games", "Extreme Sports", "Winter Games", "Summer Games",
+            "Music Rhythm", "Dance Party", "Karaoke Fun", "Instrument Master", "Beat Maker",
+            "Art Studio", "Drawing Game", "Painting Fun", "Color Match", "Design Challenge",
+            "Science Lab", "Physics Puzzle", "Chemistry Game", "Biology Explorer", "Astronomy Adventure"
+        ];
+
+        // Generate game cards
+        const gamesGrid = document.getElementById('gamesGrid');
+        
+        // Create 100+ game cards
+        for (let i = 0; i < 127; i++) {
+            const gameCard = document.createElement('div');
+            gameCard.className = 'game-card';
+            
+            // Generate a random game description
+            const descriptions = [
+                "An exciting adventure with challenging levels and amazing graphics.",
+                "Test your skills in this fast-paced action game with multiple modes.",
+                "A puzzle game that will challenge your mind and keep you entertained for hours.",
+                "Compete with players worldwide in this competitive multiplayer experience.",
+                "Explore vast worlds and complete quests in this immersive RPG.",
+                "Simple controls but challenging gameplay that anyone can enjoy.",
+                "A classic game with a modern twist and updated visuals.",
+                "Perfect for quick gaming sessions with its pick-up-and-play design."
+            ];
+            
+            const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+            const gameName = gameTitles[i % gameTitles.length];
+            // Create a URL-friendly game name (lowercase, no spaces)
+            const gameUrl = gameName.toLowerCase().replace(/\s+/g, '-');
+            
+            gameCard.innerHTML = `
+                <div class="game-image">
+                    <div class="placeholder">${gameName}</div>
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">${gameName}</h3>
+                    <p class="game-description">${randomDescription}</p>
+                    <a href="games/${gameUrl}/${gameUrl}.html" class="play-button">Play Now</a>
+                </div>
+            `;
+            
+            gamesGrid.appendChild(gameCard);
+        }
+
+        // Add search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                const title = card.querySelector('.game-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Add pagination functionality
+        const pageButtons = document.querySelectorAll('.page-button');
+        pageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                pageButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // In a real implementation, this would load the appropriate page of games
+                // For this demo, we'll just scroll to the top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
